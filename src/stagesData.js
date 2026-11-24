@@ -2,6 +2,7 @@
 // വേദി വിവരങ്ങളും ലൊക്കേഷൻ കോർഡിനേറ്റുകളും (Stages & Location Coordinates)
 // ==============================================================================
 // 37-ാമത് മലപ്പുറം റവന്യൂ ജില്ലാ സ്കൂൾ കലോത്സവം 2026, KHMHSS ആലത്തിയൂർ
+// തുറന്ന വേദികൾ (വേദി 1 മുതൽ 14 വരെ)
 // ==============================================================================
 
 export const stagesData = [
@@ -130,59 +131,5 @@ export const stagesData = [
     coords: '10°51\'52.3"N 75°56\'04.7"E',
     lat: 10.864528,
     lng: 75.934639,
-  },
-  {
-    no: 15,
-    name: "വേദി 15",
-    venue: "KHM HSS Hall",
-    size: "16×16",
-    coords: "",
-    lat: null,
-    lng: null,
-  },
-  {
-    no: 16,
-    name: "വേദി 16",
-    venue: "KHM HSS Class Room C2B",
-    size: "16×16",
-    coords: "",
-    lat: null,
-    lng: null,
-  },
-  {
-    no: 17,
-    name: "വേദി 17",
-    venue: "Navodaya College Hall",
-    size: "16×16",
-    coords: "",
-    lat: null,
-    lng: null,
-  },
-  {
-    no: 18,
-    name: "വേദി 18",
-    venue: "Darul Quran Royal Hall",
-    size: "16×16",
-    coords: "",
-    lat: null,
-    lng: null,
-  },
-  {
-    no: 19,
-    name: "വേദി 19",
-    venue: "Darul Quran Conference Hall",
-    size: "16×16",
-    coords: "",
-    lat: null,
-    lng: null,
-  },
-  {
-    no: 20,
-    name: "വേദി 20",
-    venue: "Goal Way Academy Hall",
-    size: "16×16",
-    coords: "",
-    lat: null,
-    lng: null,
   },
 ];

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { stagesData } from "./stagesData.js";
 
 // DMS parser in case coordinates are pasted as "10°51'45.9\"N 75°56'07.2\"E"
@@ -43,16 +44,42 @@ function getMapLink(stage) {
 }
 
 export default function App() {
+  const [showSchedule, setShowSchedule] = useState(false);
+
   return (
     <>
       <header>
         <div className="festival-header">
-          <div className="festival-badge">37-ാമത് മലപ്പുറം റവന്യൂ ജില്ലാ സ്കൂൾ കലോത്സവം</div>
-          <div className="venue-badge">കെ.എച്ച്.എം.എച്ച്.എസ്.എസ് ആലത്തിയൂർ</div>
+          <div className="festival-badge">
+            37-ാമത് മലപ്പുറം റവന്യൂ ജില്ലാ സ്കൂൾ കലോത്സവം
+          </div>
+          <div className="venue-badge">
+            കെ.എച്ച്.എം.എച്ച്.എസ്.എസ് ആലത്തിയൂർ
+          </div>
         </div>
         <h1>വേദിയിലേക്കുള്ള വഴി അറിയണോ?</h1>
         <p className="subtitle">'വഴി' എന്ന ബട്ടണിൽ ക്ലിക്ക് ചെയ്യൂ</p>
+
+        {/* Side / Option Button for Schedule */}
+        <div className="schedule-btn-wrap">
+          <button
+            className="schedule-btn"
+            onClick={() => setShowSchedule(true)}
+            title="മത്സര ഇനങ്ങളും വേദിയും ടൈംടേബിൾ കാണുക"
+          >
+            📋 മത്സര ഇനങ്ങളും വേദിയും
+          </button>
+        </div>
       </header>
+
+      {/* Floating Side Button for quick access while scrolling */}
+      <button
+        className="floating-side-btn"
+        onClick={() => setShowSchedule(true)}
+        aria-label="മത്സര ഇനങ്ങളും വേദിയും"
+      >
+        <span>📋 മത്സര ഇനങ്ങളും വേദിയും</span>
+      </button>
 
       <main>
         <div className="stages-list">
@@ -64,6 +91,9 @@ export default function App() {
                   <div className="vedhi-num">{stage.no}</div>
                   <div className="vedhi-text">
                     <div className="vedhi-name">{stage.name}</div>
+                    {stage.venue && (
+                      <div className="vedhi-venue">📍 {stage.venue}</div>
+                    )}
                     <div className="vedhi-coord">
                       {stage.coords || "ലൊക്കേഷൻ ഉടൻ ചേർക്കും"}
                     </div>
@@ -87,7 +117,7 @@ export default function App() {
                       className="arrow-btn disabled"
                       onClick={() =>
                         alert(
-                          `${stage.name} - ലൊക്കേഷൻ ഉടൻ ചേർക്കുന്നതാണ് (Please add coordinates in stagesData.js)`
+                          `${stage.name} (${stage.venue}) - ലൊക്കേഷൻ ഉടൻ ചേർക്കുന്നതാണ്`
                         )
                       }
                       title="ലൊക്കേഷൻ ഉടൻ ചേർക്കും"
@@ -102,6 +132,44 @@ export default function App() {
           })}
         </div>
       </main>
+
+      {/* Fullscreen / Modal for Schedule Image */}
+      {showSchedule && (
+        <div className="modal-backdrop" onClick={() => setShowSchedule(false)}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <h3>📋 മത്സര ഇനങ്ങളും വേദിയും (ഷെഡ്യൂൾ)</h3>
+              <div className="modal-actions">
+                <a
+                  className="modal-full-btn"
+                  href="/schedule.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  🔍 വലുതാക്കി കാണുക
+                </a>
+                <button
+                  className="modal-close-btn"
+                  onClick={() => setShowSchedule(false)}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            <div className="modal-body">
+              <img
+                src="/schedule.jpg"
+                alt="മത്സര ഇനങ്ങളും വേദിയും"
+                className="schedule-img"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

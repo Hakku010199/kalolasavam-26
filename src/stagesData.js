@@ -1,21 +1,24 @@
 // ==============================================================================
 // വേദി വിവരങ്ങളും ലൊക്കേഷൻ കോർഡിനേറ്റുകളും (Stages & Location Coordinates)
 // ==============================================================================
-// നിങ്ങൾക്കിവിടെ 1 മുതൽ 14 വരെയുള്ള വേദികളുടെ കോർഡിനേറ്റുകൾ നൽകാം.
-// coords എന്നതിൽ 10°51'45.9"N 75°56'07.2"E പോലെയുള്ള DMS ഫോർമാറ്റ് നേരിട്ട് നൽകാം.
+// 37-ാമത് മലപ്പുറം റവന്യൂ ജില്ലാ സ്കൂൾ കലോത്സവം 2026, KHMHSS ആലത്തിയൂർ
 // ==============================================================================
 
 export const stagesData = [
   {
     no: 1,
     name: "വേദി 1",
-    coords: "", // ബാക്കി കോർഡിനേറ്റ് ഇവിടെ നൽകുക (ഉദാ: 10°51'40.0"N 75°56'10.0"E)
+    venue: "KHMHSS Main Stage (ഉദ്ഘാടന വേദി)",
+    size: "24×24",
+    coords: "",
     lat: null,
     lng: null,
   },
   {
     no: 2,
     name: "വേദി 2",
+    venue: "KHMHSS Ground (മെയിൻ സ്റ്റേജിന് അടുത്ത്)",
+    size: "24×24",
     coords: "",
     lat: null,
     lng: null,
@@ -23,6 +26,8 @@ export const stagesData = [
   {
     no: 3,
     name: "വേദി 3",
+    venue: "കുറ്റിപ്പുറം റോഡ് ബസ് സ്റ്റോപ്പിന് സമീപം (നാടകവേദി)",
+    size: "24×24",
     coords: "",
     lat: null,
     lng: null,
@@ -30,6 +35,8 @@ export const stagesData = [
   {
     no: 4,
     name: "വേദി 4",
+    venue: "സ്റ്റാഫ് പറമ്പ്, കുറ്റിപ്പുറം റോഡ്",
+    size: "20×20",
     coords: "",
     lat: null,
     lng: null,
@@ -37,6 +44,8 @@ export const stagesData = [
   {
     no: 5,
     name: "വേദി 5",
+    venue: "ചമ്രവട്ടം റോഡ്, IMC ഹോസ്പിറ്റലിന് സമീപം (നാടകവേദി)",
+    size: "24×24",
     coords: "",
     lat: null,
     lng: null,
@@ -44,6 +53,8 @@ export const stagesData = [
   {
     no: 6,
     name: "വേദി 6",
+    venue: "Darul Quran സ്കൂളിന്റെ മുൻവശം, റോഡ് സൈഡിൽ",
+    size: "24×24",
     coords: "",
     lat: null,
     lng: null,
@@ -51,6 +62,8 @@ export const stagesData = [
   {
     no: 7,
     name: "വേദി 7",
+    venue: "അലിഹാജി കോംപ്ലക്സിന്റെ പിൻവശം, ആച്ചിക്കളം പറമ്പ്",
+    size: "24×24",
     coords: "",
     lat: null,
     lng: null,
@@ -58,6 +71,8 @@ export const stagesData = [
   {
     no: 8,
     name: "വേദി 8",
+    venue: "കോ ഓപ്പറേറ്റീവ് കോളേജിന്റെ പിൻവശം",
+    size: "20×20",
     coords: "",
     lat: null,
     lng: null,
@@ -65,6 +80,8 @@ export const stagesData = [
   {
     no: 9,
     name: "വേദി 9",
+    venue: "നവോദയ കോളേജിന് എതിർവശം",
+    size: "24×24",
     coords: "",
     lat: null,
     lng: null,
@@ -72,6 +89,8 @@ export const stagesData = [
   {
     no: 10,
     name: "വേദി 10",
+    venue: "മലയമ്പാടി റോഡിന് സമീപം, കോയ ഹാജിയുടെ പറമ്പിന്റെ പടിഞ്ഞാറ് ഭാഗം",
+    size: "20×20",
     coords: "",
     lat: null,
     lng: null,
@@ -79,6 +98,8 @@ export const stagesData = [
   {
     no: 11,
     name: "വേദി 11",
+    venue: "മലയമ്പാടി റോഡിന് സമീപം, കോയ ഹാജിയുടെ പറമ്പിന്റെ കിഴക്ക് ഭാഗം",
+    size: "20×20",
     coords: "",
     lat: null,
     lng: null,
@@ -86,6 +107,8 @@ export const stagesData = [
   {
     no: 12,
     name: "വേദി 12",
+    venue: "സുബ്രഹ്മണ്യ ക്ഷേത്ര കവാടത്തിന്റെ കിഴക്കുഭാഗം",
+    size: "24×24",
     coords: "",
     lat: null,
     lng: null,
@@ -93,6 +116,8 @@ export const stagesData = [
   {
     no: 13,
     name: "വേദി 13",
+    venue: "KHMHSS-ന്റെ പിറകുവശം",
+    size: "20×20",
     coords: '10°51\'45.9"N 75°56\'07.2"E',
     lat: 10.86275,
     lng: 75.935333,
@@ -100,8 +125,64 @@ export const stagesData = [
   {
     no: 14,
     name: "വേദി 14",
+    venue: "KHMHSS-ന്റെ പിറകുവശം, Driving School Ground",
+    size: "24×24",
     coords: '10°51\'52.3"N 75°56\'04.7"E',
     lat: 10.864528,
     lng: 75.934639,
+  },
+  {
+    no: 15,
+    name: "വേദി 15",
+    venue: "KHM HSS Hall",
+    size: "16×16",
+    coords: "",
+    lat: null,
+    lng: null,
+  },
+  {
+    no: 16,
+    name: "വേദി 16",
+    venue: "KHM HSS Class Room C2B",
+    size: "16×16",
+    coords: "",
+    lat: null,
+    lng: null,
+  },
+  {
+    no: 17,
+    name: "വേദി 17",
+    venue: "Navodaya College Hall",
+    size: "16×16",
+    coords: "",
+    lat: null,
+    lng: null,
+  },
+  {
+    no: 18,
+    name: "വേദി 18",
+    venue: "Darul Quran Royal Hall",
+    size: "16×16",
+    coords: "",
+    lat: null,
+    lng: null,
+  },
+  {
+    no: 19,
+    name: "വേദി 19",
+    venue: "Darul Quran Conference Hall",
+    size: "16×16",
+    coords: "",
+    lat: null,
+    lng: null,
+  },
+  {
+    no: 20,
+    name: "വേദി 20",
+    venue: "Goal Way Academy Hall",
+    size: "16×16",
+    coords: "",
+    lat: null,
+    lng: null,
   },
 ];

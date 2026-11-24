@@ -53,6 +53,9 @@ export default function App() {
           <div className="venue-badge">
             കെ.എച്ച്.എം.എച്ച്.എസ്.എസ് ആലത്തിയൂർ
           </div>
+          <div className="date-badge">
+            🗓️ 2026 നവംബർ 28, 30 & ഡിസംബർ 01, 02, 03
+          </div>
         </div>
         <h1>വേദിയിലേക്കുള്ള വഴി അറിയണോ?</h1>
         <p className="subtitle">'വഴി' എന്ന ബട്ടണിൽ ക്ലിക്ക് ചെയ്യൂ</p>

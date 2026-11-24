@@ -68,6 +68,16 @@ header {
   opacity: 0.92;
 }
 
+.date-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 14px;
+  border-radius: 20px;
+  margin-top: 4px;
+  letter-spacing: 0.01em;
+}
+
 h1 {
   margin: 0;
   font-size: 1.3rem;

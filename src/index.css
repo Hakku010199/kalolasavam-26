@@ -48,6 +48,26 @@ header {
   text-align: center;
 }
 
+.festival-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 10px;
+}
+
+.festival-badge {
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+.venue-badge {
+  font-size: 0.95rem;
+  font-weight: 700;
+  opacity: 0.92;
+}
+
 h1 {
   margin: 0;
   font-size: 1.4rem;

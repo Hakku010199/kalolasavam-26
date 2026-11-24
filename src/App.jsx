@@ -46,10 +46,12 @@ export default function App() {
   return (
     <>
       <header>
+        <div className="festival-header">
+          <div className="festival-badge">37-ാമത് മലപ്പുറം റവന്യൂ ജില്ലാ സ്കൂൾ കലോത്സവം</div>
+          <div className="venue-badge">കെ.എച്ച്.എം.എച്ച്.എസ്.എസ് ആലത്തിയൂർ</div>
+        </div>
         <h1>വേദിയിലേക്കുള്ള വഴി അറിയണോ?</h1>
-        <p className="subtitle">
-          'വഴി' എന്ന ബട്ടണിൽ ക്ലിക്ക് ചെയ്യൂ
-        </p>
+        <p className="subtitle">'വഴി' എന്ന ബട്ടണിൽ ക്ലിക്ക് ചെയ്യൂ</p>
       </header>
 
       <main>

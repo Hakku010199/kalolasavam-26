@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-// CounterAPI v2 — uses a namespace + key.
-// First hit on /up auto-creates the counter if it doesn't exist.
 const NAMESPACE = "kalolsavam26";
 const KEY = "app-likes";
 const API_BASE = `https://api.counterapi.dev/v2/${NAMESPACE}/${KEY}`;
@@ -9,39 +7,24 @@ const API_BASE = `https://api.counterapi.dev/v2/${NAMESPACE}/${KEY}`;
 export default function LikeButton({ itemId = "app-likes" }) {
   const storageKey = `liked_${itemId}`;
 
-  const [count, setCount] = useState(null); // null = still loading
+  const [count, setCount] = useState(null); // null = loading
   const [liked, setLiked] = useState(() => {
     try { return localStorage.getItem(storageKey) === "true"; } catch { return false; }
   });
   const [loading, setLoading] = useState(false);
   const [popping, setPopping] = useState(false);
-  const [particles, setParticles] = useState([]);
 
-  // ── Fetch current global count on mount ──────────────────────────────────
+  // Fetch current global count on mount
   useEffect(() => {
     fetch(API_BASE)
       .then((r) => r.json())
       .then((d) => {
-        // v2 response shape: { count: number } or { value: number }
         const val = d?.count ?? d?.value ?? d?.hits ?? 0;
         setCount(typeof val === "number" ? val : 0);
       })
       .catch(() => setCount(0));
   }, []);
 
-  // ── Particle burst ───────────────────────────────────────────────────────
-  const spawnParticles = useCallback(() => {
-    const emojis = ["❤️", "💖", "✨", "🔥", "⭐", "🎉", "💕"];
-    const batch = Array.from({ length: 5 }, () => ({
-      id: Date.now() + Math.random(),
-      x: (Math.random() - 0.5) * 90,
-      emoji: emojis[Math.floor(Math.random() * emojis.length)],
-    }));
-    setParticles(batch);
-    setTimeout(() => setParticles([]), 1200);
-  }, []);
-
-  // ── Handle like / unlike ─────────────────────────────────────────────────
   const handleClick = useCallback(async () => {
     if (loading) return;
 
@@ -52,7 +35,6 @@ export default function LikeButton({ itemId = "app-likes" }) {
     setCount((c) => (c ?? 0) + (willLike ? 1 : -1));
     setPopping(true);
     setTimeout(() => setPopping(false), 320);
-    if (willLike) spawnParticles();
 
     setLoading(true);
     try {
@@ -69,7 +51,7 @@ export default function LikeButton({ itemId = "app-likes" }) {
     } finally {
       setLoading(false);
     }
-  }, [liked, loading, storageKey, spawnParticles]);
+  }, [liked, loading, storageKey]);
 
   return (
     <div className="lb-wrapper">
@@ -86,17 +68,6 @@ export default function LikeButton({ itemId = "app-likes" }) {
           {count === null ? "…" : count.toLocaleString()}
         </span>
       </button>
-
-      {particles.map((p) => (
-        <span
-          key={p.id}
-          className="lb-particle"
-          style={{ "--dx": `${p.x}px` }}
-          aria-hidden="true"
-        >
-          {p.emoji}
-        </span>
-      ))}
     </div>
   );
 }

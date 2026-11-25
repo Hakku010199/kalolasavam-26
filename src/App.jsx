@@ -38,8 +38,6 @@ function getMapLink(stage) {
 }
 
 export default function App() {
-  const [showSchedule, setShowSchedule] = useState(false);
-  const [zoom, setZoom] = useState(1);
   const [showLikePopup, setShowLikePopup] = useState(false);
   const [likePopupDismissed, setLikePopupDismissed] = useState(false);
 
@@ -55,10 +53,6 @@ export default function App() {
     setShowLikePopup(false);
     setLikePopupDismissed(true);
   };
-
-  const zoomIn = () => setZoom((z) => Math.min(z + 0.35, 3));
-  const zoomOut = () => setZoom((z) => Math.max(z - 0.35, 0.7));
-  const resetZoom = () => setZoom(1);
 
   return (
     <>
@@ -76,25 +70,7 @@ export default function App() {
         </div>
         <h1>വേദിയിലേക്കുള്ള വഴി അറിയണോ?</h1>
         <p className="subtitle">'വഴി' എന്ന ബട്ടണിൽ ക്ലിക്ക് ചെയ്യൂ</p>
-
-        <div className="schedule-btn-wrap">
-          <button
-            className="schedule-btn"
-            onClick={() => { setZoom(1); setShowSchedule(true); }}
-          >
-            📋 മത്സര ഇനങ്ങളും വേദിയും
-          </button>
-        </div>
       </header>
-
-      {/* Floating Schedule Button */}
-      <button
-        className="floating-side-btn"
-        onClick={() => { setZoom(1); setShowSchedule(true); }}
-        aria-label="മത്സര ഇനങ്ങളും വേദിയും"
-      >
-        📋 ഷെഡ്യൂൾ
-      </button>
 
       <main>
         <div className="stages-list">
@@ -139,39 +115,9 @@ export default function App() {
         <div className="like-popup-backdrop" onClick={closeLikePopup}>
           <div className="like-popup" onClick={(e) => e.stopPropagation()}>
             <button className="like-popup-close" onClick={closeLikePopup} aria-label="Close">✕</button>
+            <p className="like-popup-text">ഒരു Like ഇട്ട് adikkuu!</p>
             <div onClick={closeLikePopup}>
               <LikeButton itemId="app-likes" />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Schedule Modal */}
-      {showSchedule && (
-        <div className="modal-backdrop" onClick={() => setShowSchedule(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <div className="modal-title-group">
-                <h3>📋 മത്സര ഇനങ്ങളും വേദിയും</h3>
-                <span className="zoom-indicator">{Math.round(zoom * 100)}%</span>
-              </div>
-              <div className="modal-actions">
-                <button className="zoom-btn" onClick={zoomIn}>🔍+</button>
-                <button className="zoom-btn" onClick={zoomOut}>🔍-</button>
-                <button className="zoom-btn" onClick={resetZoom}>100%</button>
-                <a className="modal-full-btn" href="/schedule.jpg" target="_blank" rel="noopener noreferrer">
-                  പുറത്ത് കാണുക ↗
-                </a>
-                <button className="modal-close-btn" onClick={() => setShowSchedule(false)}>✕</button>
-              </div>
-            </div>
-            <div className="modal-body">
-              <div
-                className="zoom-wrapper"
-                style={{ transform: `scale(${zoom})`, transformOrigin: "top left", transition: "transform 0.15s ease-out" }}
-              >
-                <img src="/schedule.jpg" alt="മത്സര ഇനങ്ങളും വേദിയും" className="schedule-img" />
-              </div>
             </div>
           </div>
         </div>

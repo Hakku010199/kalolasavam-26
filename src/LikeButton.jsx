@@ -1,99 +1,93 @@
 import { useState, useEffect, useCallback } from "react";
 
-const NAMESPACE = "kalolsavam26-alathiyur"; // unique namespace for this app
-const API_BASE = `https://api.counterapi.dev/v1/${NAMESPACE}`;
+// CounterAPI v2 — uses a namespace + key.
+// First hit on /up auto-creates the counter if it doesn't exist.
+const NAMESPACE = "kalolsavam26";
+const KEY = "app-likes";
+const API_BASE = `https://api.counterapi.dev/v2/${NAMESPACE}/${KEY}`;
 
 export default function LikeButton({ itemId = "app-likes" }) {
   const storageKey = `liked_${itemId}`;
-  const [count, setCount] = useState(0);
+
+  const [count, setCount] = useState(null); // null = still loading
   const [liked, setLiked] = useState(() => {
-    try {
-      return localStorage.getItem(storageKey) === "true";
-    } catch {
-      return false;
-    }
+    try { return localStorage.getItem(storageKey) === "true"; } catch { return false; }
   });
   const [loading, setLoading] = useState(false);
   const [popping, setPopping] = useState(false);
-  const [floatingParticles, setFloatingParticles] = useState([]);
+  const [particles, setParticles] = useState([]);
 
-  // Fetch the global count on mount
+  // ── Fetch current global count on mount ──────────────────────────────────
   useEffect(() => {
-    fetch(`${API_BASE}/${itemId}`)
+    fetch(API_BASE)
       .then((r) => r.json())
       .then((d) => {
-        if (typeof d?.count === "number") setCount(d.count);
+        // v2 response shape: { count: number } or { value: number }
+        const val = d?.count ?? d?.value ?? d?.hits ?? 0;
+        setCount(typeof val === "number" ? val : 0);
       })
-      .catch(() => {}); // silently fail — show 0
-  }, [itemId]);
-
-  const spawnParticles = useCallback(() => {
-    const emojis = ["❤️", "💖", "✨", "🔥", "⭐", "🎉", "💕"];
-    const count = 4 + Math.floor(Math.random() * 3);
-    const particles = Array.from({ length: count }, () => ({
-      id: Date.now() + Math.random(),
-      x: (Math.random() - 0.5) * 80,
-      emoji: emojis[Math.floor(Math.random() * emojis.length)],
-    }));
-    setFloatingParticles(particles);
-    setTimeout(() => setFloatingParticles([]), 1200);
+      .catch(() => setCount(0));
   }, []);
 
+  // ── Particle burst ───────────────────────────────────────────────────────
+  const spawnParticles = useCallback(() => {
+    const emojis = ["❤️", "💖", "✨", "🔥", "⭐", "🎉", "💕"];
+    const batch = Array.from({ length: 5 }, () => ({
+      id: Date.now() + Math.random(),
+      x: (Math.random() - 0.5) * 90,
+      emoji: emojis[Math.floor(Math.random() * emojis.length)],
+    }));
+    setParticles(batch);
+    setTimeout(() => setParticles([]), 1200);
+  }, []);
+
+  // ── Handle like / unlike ─────────────────────────────────────────────────
   const handleClick = useCallback(async () => {
     if (loading) return;
 
     const willLike = !liked;
 
-    // --- Optimistic UI update ---
+    // Optimistic update
     setLiked(willLike);
-    setCount((c) => c + (willLike ? 1 : -1));
+    setCount((c) => (c ?? 0) + (willLike ? 1 : -1));
     setPopping(true);
     setTimeout(() => setPopping(false), 320);
     if (willLike) spawnParticles();
 
     setLoading(true);
-
     try {
       const endpoint = willLike ? "up" : "down";
-      const res = await fetch(`${API_BASE}/${itemId}/${endpoint}`);
+      const res = await fetch(`${API_BASE}/${endpoint}`);
       const data = await res.json();
-
-      if (typeof data?.count === "number") {
-        // Sync with actual server count
-        setCount(data.count);
-      }
-
-      // Persist like state only after successful API call
-      try {
-        localStorage.setItem(storageKey, String(willLike));
-      } catch {}
+      const serverCount = data?.count ?? data?.value ?? data?.hits;
+      if (typeof serverCount === "number") setCount(serverCount);
+      try { localStorage.setItem(storageKey, String(willLike)); } catch {}
     } catch {
       // Revert on failure
       setLiked(!willLike);
-      setCount((c) => c + (willLike ? -1 : 1));
+      setCount((c) => (c ?? 0) + (willLike ? -1 : 1));
     } finally {
       setLoading(false);
     }
-  }, [liked, loading, itemId, storageKey, spawnParticles]);
+  }, [liked, loading, storageKey, spawnParticles]);
 
   return (
     <div className="lb-wrapper">
       <button
-        className={`lb-btn ${liked ? "lb-liked" : ""} ${popping ? "lb-popping" : ""}`}
+        className={`lb-btn${liked ? " lb-liked" : ""}${popping ? " lb-popping" : ""}`}
         onClick={handleClick}
         disabled={loading}
         aria-label={liked ? "Unlike" : "Like"}
         aria-pressed={liked}
       >
-        <span className="lb-heart" aria-hidden="true">
-          {liked ? "❤️" : "🤍"}
+        <span className="lb-heart" aria-hidden="true">{liked ? "❤️" : "🤍"}</span>
+        <span className="lb-label">{liked ? "Liked!" : "Like"}</span>
+        <span className="lb-count">
+          {count === null ? "…" : count.toLocaleString()}
         </span>
-        <span className="lb-label">{liked ? "Liked" : "Like"}</span>
-        <span className="lb-count">{count.toLocaleString()}</span>
       </button>
 
-      {/* Floating burst particles */}
-      {floatingParticles.map((p) => (
+      {particles.map((p) => (
         <span
           key={p.id}
           className="lb-particle"

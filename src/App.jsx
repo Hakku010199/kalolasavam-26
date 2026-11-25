@@ -139,9 +139,6 @@ export default function App() {
         <div className="like-popup-backdrop" onClick={closeLikePopup}>
           <div className="like-popup" onClick={(e) => e.stopPropagation()}>
             <button className="like-popup-close" onClick={closeLikePopup} aria-label="Close">✕</button>
-            <div className="like-popup-heading">ഈ ആപ്പ് ഉപകാരപ്രദമായോ? 😊</div>
-            <div className="like-popup-sub">ഒരു Like ഇട്ട് സഹകരിക്കൂ!</div>
-            {/* LikeButton auto-closes popup on click via closeLikePopup after like */}
             <div onClick={closeLikePopup}>
               <LikeButton itemId="app-likes" />
             </div>

@@ -36,7 +36,7 @@ export const stagesData = [
   {
     no: 4,
     name: "വേദി 4",
-    venue: "സ്റ്റാഫ് പറമ്പ്, കുറ്റിപ്പുറം റോഡ്",
+    venue: "സ്ക്രാപ്പ് പറമ്പ്, കുറ്റിപ്പുറം റോഡ്",
     size: "20×20",
     coords: "",
     lat: null,

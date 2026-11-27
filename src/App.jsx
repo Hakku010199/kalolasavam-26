@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import { stagesData } from "./stagesData.js";
-import LikeButton from "./LikeButton.jsx";
 
 function parseDmsPart(str) {
   const m = str.match(/([0-9.]+)[°\s]+([0-9.]+)?['\s]*([0-9.]+)?[\"\s]*([NSEW])/i);
@@ -38,22 +36,6 @@ function getMapLink(stage) {
 }
 
 export default function App() {
-  const [showLikePopup, setShowLikePopup] = useState(false);
-  const [likePopupDismissed, setLikePopupDismissed] = useState(false);
-
-  // Show like popup after 3 seconds on mount (once per session)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!likePopupDismissed) setShowLikePopup(true);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [likePopupDismissed]);
-
-  const closeLikePopup = () => {
-    setShowLikePopup(false);
-    setLikePopupDismissed(true);
-  };
-
   return (
     <>
       <header>
@@ -82,22 +64,32 @@ export default function App() {
                   <div className="vedhi-num">{stage.no}</div>
                   <div className="vedhi-text">
                     <div className="vedhi-name">{stage.name}</div>
-                    {stage.venue && <div className="vedhi-venue">📍 {stage.venue}</div>}
-                    <div className="vedhi-coord">
-                      {stage.coords || "ലൊക്കേഷൻ ഉടൻ ചേർക്കും"}
-                    </div>
+                    {stage.venue && (
+                      <div className="vedhi-venue">📍 {stage.venue}</div>
+                    )}
                   </div>
                 </div>
                 <div className="vedhi-actions">
                   {mapUrl ? (
-                    <a className="arrow-btn" href={mapUrl} target="_blank" rel="noopener noreferrer">
+                    <a
+                      className="arrow-btn"
+                      href={mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`${stage.name} - വഴി കാണുക`}
+                    >
                       <span className="arrow-icon">➤</span>
                       <span>വഴി</span>
                     </a>
                   ) : (
                     <button
                       className="arrow-btn disabled"
-                      onClick={() => alert(`${stage.name} (${stage.venue}) - ലൊക്കേഷൻ ഉടൻ ചേർക്കുന്നതാണ്`)}
+                      onClick={() =>
+                        alert(
+                          `${stage.name} (${stage.venue}) - ലൊക്കേഷൻ ഉടൻ ചേർക്കുന്നതാണ്`
+                        )
+                      }
+                      title="ലൊക്കേഷൻ ഉടൻ ചേർക്കും"
                     >
                       <span className="arrow-icon">➤</span>
                       <span>വഴി</span>
@@ -109,19 +101,6 @@ export default function App() {
           })}
         </div>
       </main>
-
-      {/* Like Popup (appears after 3 seconds) */}
-      {showLikePopup && (
-        <div className="like-popup-backdrop" onClick={closeLikePopup}>
-          <div className="like-popup" onClick={(e) => e.stopPropagation()}>
-            <button className="like-popup-close" onClick={closeLikePopup} aria-label="Close">✕</button>
-            <p className="like-popup-text">ഒരു ലൈക്ക് അടിക്കൂ!</p>
-            <div onClick={closeLikePopup}>
-              <LikeButton itemId="app-likes" />
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }
